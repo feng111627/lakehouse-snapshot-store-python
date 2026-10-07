@@ -1,12 +1,12 @@
+import os
+
 import uvicorn
-from fastapi import FastAPI
 
-app = FastAPI()
+from lakehouse.api import create_app
+from lakehouse.store import SnapshotStore
 
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+store = SnapshotStore(os.environ.get("LAKEHOUSE_ROOT", "./data"))
+app = create_app(store)
 
 
 if __name__ == "__main__":
